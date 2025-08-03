@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Code Snippet</title>
+    <style>
+        /* --- Report View Mode Toggle Switch --- */
+        .ptt-toggle-control {
+            display: inline-flex;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            padding: 2px;
+            border: 1px solid #c9c9c9;
+        }
+
+        .ptt-toggle-control input[type="radio"] {
+            display: none;
+        }
+
+        .ptt-toggle-control label {
+            margin-bottom: 0;
+            padding: 4px 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            cursor: pointer;
+            border-radius: 13px;
+            transition: all 0.2s ease-in-out;
+            color: #50575e;
+            font-weight: 400;
+        }
+
+        .ptt-toggle-control input[type="radio"]:checked + label {
+            background-color: #fff;
+            color: #1d2327;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        /* --- Additional Styles for Demonstration --- */
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .report-content {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        .report-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>View Mode</h2>
+
+    <div class="ptt-toggle-control">
+        <input type="radio" id="view_mode_classic" name="view_mode" value="classic" checked>
+        <label for="view_mode_classic">Classic</label>
+
+        <input type="radio" id="view_mode_task_focused" name="view_mode" value="task_focused">
+        <label for="view_mode_task_focused">Task Focused</label>
+
+        <input type="radio" id="view_mode_single_day" name="view_mode" value="single_day">
+        <label for="view_mode_single_day">Single Day</label>
+    </div>
+
+    <div id="classic-content" class="report-content active">
+        <h3>Classic Report</h3>
+        <p>This report groups tasks by Client and Project.</p>
+    </div>
+    <div id="task_focused-content" class="report-content">
+        <h3>Task Focused Report</h3>
+        <p>This report shows a flat list of all tasks.</p>
+    </div>
+    <div id="single_day-content" class="report-content">
+        <h3>Single Day Report</h3>
+        <p>This report shows all work for one day.</p>
+    </div>
+
+    <script>
+        // JavaScript to handle the tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const viewModeRadios = document.querySelectorAll('input[name="view_mode"]');
+            const reportContents = document.querySelectorAll('.report-content');
+
+            function handleViewModeChange() {
+                const selectedValue = document.querySelector('input[name="view_mode"]:checked').value;
+
+                // Hide all content sections
+                reportContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show the selected content section
+                const activeContent = document.getElementById(selectedValue + '-content');
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                }
+            }
+
+            // Add change event listener to each radio button
+            viewModeRadios.forEach(radio => {
+                radio.addEventListener('change', handleViewModeChange);
+            });
+
+            // Set initial state
+            handleViewModeChange();
+        });
+    </script>
+
+</body>
+</html>
