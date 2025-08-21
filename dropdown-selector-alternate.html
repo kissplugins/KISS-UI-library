@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure CSS Dropdown Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,300" rel="stylesheet">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            background: #d0d0d0;
+            color: #444444;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            margin-bottom: 3em;
+        }
+
+        p {
+            width: 23em;
+            font-size: 1.2em;
+            line-height: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        p:last-of-type {
+            margin-bottom: 2em;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .dropdown {
+            height: 3em;
+            width: 16.18em; /* 1.618em * 10 */
+            text-align: left;
+            position: relative;
+            background-color: #f5f5f5;
+        }
+
+        .dropdown_switch {
+            transition: all 0.2s ease-in-out;
+            transform: scale(0.75);
+            border-radius: 50%;
+            position: absolute;
+            right: 0.75em;
+            top: 0.75em;
+            z-index: 0;
+            width: 1.5em;
+            height: 1.5em;
+            background-color: #3498db;
+            cursor: pointer;
+        }
+
+        .dropdown_switch:focus {
+            transform: scale(0.75);
+        }
+
+        .dropdown:focus {
+            background-color: transparent;
+        }
+
+        .dropdown:focus .dropdown_list {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown:focus .dropdown_list input:not(:checked) + label {
+            height: auto;
+            padding: 1em 1.2em;
+        }
+
+        .dropdown:focus .dropdown_list input:checked + label {
+            color: #f0f0f0;
+            background-color: #444444;
+        }
+
+        .dropdown:focus .dropdown_list + .dropdown_switch {
+            z-index: 2;
+            background-color: #e74c3c;
+            transform: scale(1);
+        }
+
+        .dropdown_list {
+            z-index: 1;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            list-style: none;
+        }
+
+        .dropdown_list input {
+            display: none;
+        }
+
+        .dropdown_list label {
+            transition: all 0.2s ease-in-out;
+            padding: 1em 1.2em;
+            position: relative;
+            display: block;
+            cursor: pointer;
+        }
+
+        .dropdown_list input:not(:checked) + label,
+        .dropdown_list li:first-child input:not(:checked) + label {
+            height: 0;
+            padding: 0 1.2em;
+            overflow: hidden;
+        }
+
+        .dropdown_list li:first-child input:not(:checked) + label {
+            transition-duration: 0.6s;
+        }
+
+        /* Mobile responsive styles */
+        @media screen and (max-width: 480px) {
+            .dropdown:focus {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+                left: 0;
+                top: 0;
+            }
+
+            .dropdown:focus .dropdown_list {
+                height: 100%;
+                overflow: auto;
+            }
+
+            .dropdown:focus .dropdown_list li:first-child label {
+                opacity: 0;
+            }
+
+            .dropdown:focus .dropdown_list input:not(:checked) + label {
+                transition: none;
+                height: auto;
+                padding: 1em 1.2em;
+            }
+
+            .dropdown:focus .dropdown_list:focus {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Demo page styles */
+        .demo-container {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 2em;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .demo-section {
+            margin-bottom: 3em;
+        }
+
+        .demo-section h3 {
+            color: #444;
+            margin-bottom: 1em;
+            font-size: 1.2em;
+        }
+
+        .demo-description {
+            text-align: left;
+            margin-bottom: 2em;
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Pure CSS <strong>Dropdown</strong></h1>
+            <h2>No JavaScript Required</h2>
+        </header>
+
+        <div class="demo-container">
+            <div class="demo-description">
+                <p>This dropdown implementation uses only CSS and HTML - no JavaScript required!
+                Click on the blue circle to open/close the dropdown. The selected option will be highlighted.</p>
+            </div>
+
+            <div class="demo-section">
+                <h3>Basic Dropdown</h3>
+                <form class="dropdown" tabindex='0'>
+                    <ul class="dropdown_list">
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-null" value="" checked="checked">
+                            <label for="val-null">Select an option</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-0" value="option-a">
+                            <label for="val-0">Option A</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-1" value="option-b">
+                            <label for="val-1">Option B</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-2" value="option-c">
+                            <label for="val-2">Option C</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-3" value="option-d">
+                            <label for="val-3">Option D</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val" id="val-4" value="option-e">
+                            <label for="val-4">Option E</label>
+                        </li>
+                    </ul>
+                    <span class="dropdown_switch" tabindex='1'></span>
+                </form>
+            </div>
+
+            <div class="demo-section">
+                <h3>Pre-selected Dropdown</h3>
+                <form class="dropdown" tabindex='0'>
+                    <ul class="dropdown_list">
+                        <li>
+                            <input type="radio" name="dropdown_val2" id="val2-null" value="">
+                            <label for="val2-null">Choose a framework</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val2" id="val2-0" value="react">
+                            <label for="val2-0">React</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val2" id="val2-1" value="vue" checked="checked">
+                            <label for="val2-1">Vue.js</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val2" id="val2-2" value="angular">
+                            <label for="val2-2">Angular</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val2" id="val2-3" value="svelte">
+                            <label for="val2-3">Svelte</label>
+                        </li>
+                    </ul>
+                    <span class="dropdown_switch" tabindex='2'></span>
+                </form>
+            </div>
+
+            <div class="demo-section">
+                <h3>Long Options Dropdown</h3>
+                <form class="dropdown" tabindex='0'>
+                    <ul class="dropdown_list">
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-null" value="" checked="checked">
+                            <label for="val3-null">Select a programming language</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-0" value="javascript">
+                            <label for="val3-0">JavaScript</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-1" value="python">
+                            <label for="val3-1">Python</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-2" value="java">
+                            <label for="val3-2">Java</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-3" value="cpp">
+                            <label for="val3-3">C++</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-4" value="csharp">
+                            <label for="val3-4">C#</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-5" value="php">
+                            <label for="val3-5">PHP</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-6" value="ruby">
+                            <label for="val3-6">Ruby</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-7" value="go">
+                            <label for="val3-7">Go</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="dropdown_val3" id="val3-8" value="rust">
+                            <label for="val3-8">Rust</label>
+                        </li>
+                    </ul>
+                    <span class="dropdown_switch" tabindex='3'></span>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
