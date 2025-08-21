@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Style UI Components</title>
+    
+    <!-- jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        /* iOS Toggle Styles */
+        .ios-toggle-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+        
+        .ios-toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+        }
+        
+        .ios-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        
+        .ios-toggle .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        
+        .ios-toggle .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .ios-toggle input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        
+        .ios-toggle input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        /* iOS Style Sliders */
+        .slider-group {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .label-text {
+            color: #333;
+        }
+        
+        .label-value {
+            color: #007AFF;
+            font-weight: 600;
+        }
+        
+        .ui-slider {
+            background: #e9e9e9;
+            border-radius: 10px;
+            border: none;
+            position: relative;
+            touch-action: none;
+            height: 0.6em;
+            margin-top: 5px;
+        }
+        
+        .ui-slider .ui-slider-handle {
+            border-radius: 50%;
+            width: 1.2em;
+            height: 1.2em;
+            top: -0.3em;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            border: 1px solid #7c7c7c;
+            background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%,.1) 7.5%), 
+                             -webkit-repeating-linear-gradient(left, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 4%, hsla(0,0%, 0%,.03) 4.5%), 
+                             -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%), 
+                             linear-gradient(180deg, hsl(0,0%,78%) 0%, hsl(0,0%,90%) 47%, hsl(0,0%,78%) 53%, hsl(0,0%,70%) 100%);
+            background-color: transparent;
+            transform: rotate(-35deg);
+        }
+        
+        .ui-slider .ui-slider-handle:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.5);
+        }
+        
+        .ui-slider-range {
+            background: #007AFF;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 1;
+            height: 100%;
+        }
+        
+        .static-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        /* iOS Style Button */
+        .ios-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .ios-button:hover {
+            background: #0056CC;
+        }
+        
+        .ios-button:active {
+            background: #004499;
+        }
+        
+        /* Demo sections */
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .toggle-status {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>iOS Style UI Components</h1>
+        <p>Extracted iOS-style UI components including toggles, sliders, and buttons.</p>
+        
+        <div class="demo-section">
+            <h2>iOS Style Toggles</h2>
+            <label class="ios-toggle-wrap">
+                <span class="ios-toggle">
+                    <input type="checkbox" id="toggle1">
+                    <span class="slider"></span>
+                </span>
+                <span>Enable notifications</span>
+            </label>
+            
+            <label class="ios-toggle-wrap">
+                <span class="ios-toggle">
+                    <input type="checkbox" id="toggle2" checked>
+                    <span class="slider"></span>
+                </span>
+                <span>Show only new items</span>
+            </label>
+            
+            <div class="toggle-status" id="toggle-status">
+                Toggle 1: OFF, Toggle 2: ON
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>iOS Style Sliders</h2>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span class="label-text">Performance Level</span>
+                    <span class="label-value" id="performance-value">Balanced</span>
+                </div>
+                <div id="slider-performance"></div>
+                <div class="static-labels">
+                    <span class="left-label">Casual User</span>
+                    <span class="right-label">Power User</span>
+                </div>
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span class="label-text">Budget Priority</span>
+                    <span class="label-value" id="budget-value">Balanced</span>
+                </div>
+                <div id="slider-budget"></div>
+                <div class="static-labels">
+                    <span class="left-label">Lower Price</span>
+                    <span class="right-label">Price Less Important</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>iOS Style Button</h2>
+            <button class="ios-button" onclick="showAlert()">Test Button</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize sliders
+            const sliders = [
+                {
+                    id: 'performance',
+                    currentValId: 'performance-value',
+                    defaultVal: 50
+                },
+                {
+                    id: 'budget', 
+                    currentValId: 'budget-value',
+                    defaultVal: 50
+                }
+            ];
+
+            sliders.forEach(sl => {
+                const $slider = $('#slider-' + sl.id);
+                const $value = $('#' + sl.currentValId);
+                
+                const pretty = (v, type) => {
+                    v = parseInt(v, 10);
+                    if (type === 'performance') {
+                        if (v <= 25) return 'Casual User Focus';
+                        if (v >= 75) return 'Power User Focus';
+                        return `Balanced (Value: ${v})`;
+                    }
+                    if (type === 'budget') {
+                        if (v <= 25) return 'Lower Price Priority';
+                        if (v >= 75) return 'Price Less Important';
+                        return `Balanced Price (Pref: ${v})`;
+                    }
+                    return v;
+                };
+                
+                $slider.slider({
+                    min: 0,
+                    max: 100,
+                    value: sl.defaultVal,
+                    slide: (e, ui) => { 
+                        $value.text(pretty(ui.value, sl.id)); 
+                    },
+                    change: (e, ui) => { 
+                        $value.text(pretty(ui.value, sl.id)); 
+                        console.log(`${sl.id} slider changed to: ${ui.value}`);
+                    }
+                });
+                
+                $value.text(pretty(sl.defaultVal, sl.id));
+            });
+
+            // Toggle change handlers
+            function updateToggleStatus() {
+                const toggle1 = $('#toggle1').is(':checked') ? 'ON' : 'OFF';
+                const toggle2 = $('#toggle2').is(':checked') ? 'ON' : 'OFF';
+                $('#toggle-status').text(`Toggle 1: ${toggle1}, Toggle 2: ${toggle2}`);
+            }
+
+            $('#toggle1, #toggle2').on('change', updateToggleStatus);
+            updateToggleStatus(); // Initial status
+        });
+
+        function showAlert() {
+            alert('iOS style button clicked!');
+        }
+    </script>
+</body>
+</html>
